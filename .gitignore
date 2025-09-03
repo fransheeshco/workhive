@@ -59,9 +59,13 @@ docker-compose.override.yml
 backend/prisma/dev.db          
 
 # Prisma generated client
-backend//generated/
+backend/prisma/generated/prisma
+backend/generated/prisma
+backend/generated/
 backend/node_modules/.prisma/
 backend/generated
 
 # OR if using default
 backend/node_modules/.prisma/
+
+**/generated/
