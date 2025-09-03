@@ -56,4 +56,12 @@ docker-compose.override.yml
 .docker/
 
 # Prisma
-prisma/migrations/
+backend/prisma/dev.db          
+
+# Prisma generated client
+backend//generated/
+backend/node_modules/.prisma/
+backend/generated
+
+# OR if using default
+backend/node_modules/.prisma/

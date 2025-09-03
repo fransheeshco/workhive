@@ -1,45 +1,37 @@
 {
-  // Visit https://aka.ms/tsconfig to read more about this file
   "compilerOptions": {
-    // File Layout
-    // "rootDir": "./src",
-    // "outDir": "./dist",
+    /* File Layout */
+    "rootDir": "./source",          // take input from source
+    "outDir": "./dist",             // emit compiled JS here
 
-    // Environment Settings
-    // See also https://aka.ms/tsconfig/module
-    "module": "nodenext",
-    "moduleResolution": "nodenext",
-    "target": "esnext",
-    "types": [],
-    // For nodejs:
-    // "lib": ["esnext"],
-    // "types": ["node"],
-    // and npm install -D @types/node
+    /* Environment Settings */
+    "module": "NodeNext",           // needed for ESM in Node
+    "moduleResolution": "NodeNext",
+    "target": "ES2022",
+    "lib": ["ES2022"],
+    "esModuleInterop": true,
 
-    // Other Outputs
-    "sourceMap": true,
-    "declaration": true,
+    /* Node type definitions */
+    "types": ["node"],              // ensures Node globals are typed
+                                    // make sure to: npm i -D @types/node
+
+    /* Other Outputs */
+    "sourceMap": true,              // useful for debugging
+    "declaration": true,            // generate .d.ts files
     "declarationMap": true,
 
-    // Stricter Typechecking Options
+    /* Stricter Typechecking */
     "noUncheckedIndexedAccess": true,
     "exactOptionalPropertyTypes": true,
 
-    // Style Options
-    // "noImplicitReturns": true,
-    // "noImplicitOverride": true,
-    // "noUnusedLocals": true,
-    // "noUnusedParameters": true,
-    // "noFallthroughCasesInSwitch": true,
-    // "noPropertyAccessFromIndexSignature": true,
-
-    // Recommended Options
+    /* Recommended Options */
     "strict": true,
-    "jsx": "react-jsx",
-    "verbatimModuleSyntax": true,
-    "isolatedModules": true,
-    "noUncheckedSideEffectImports": true,
-    "moduleDetection": "force",
     "skipLibCheck": true,
-  }
+
+    /* Compatibility */
+    "isolatedModules": false,       // needed for ts-node/esm loader
+    "noUncheckedSideEffectImports": false
+  },
+  "include": ["source"],            // only compile your source folder
+  "exclude": ["node_modules", "dist"]
 }
