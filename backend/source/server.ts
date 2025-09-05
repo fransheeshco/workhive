@@ -2,10 +2,10 @@ import { PrismaClient } from '@prisma/client'
 import dotenv from 'dotenv'
 
 import app from './app'
+import prisma from './config/dbInit'
 
 dotenv.config()
 
-const prisma = new PrismaClient()
 const PORT = process.env.PORT ? parseInt(process.env.PORT): 4000
 
 async function startServer() {
