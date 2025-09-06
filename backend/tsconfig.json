@@ -22,7 +22,7 @@
 
     /* Stricter Typechecking */
     "noUncheckedIndexedAccess": true,
-    "exactOptionalPropertyTypes": true,
+    "exactOptionalPropertyTypes": false,
 
     /* Recommended Options */
     "strict": true,

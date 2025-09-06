@@ -1,11 +1,6 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
+  output   = "../source/generated/prisma"
 }
 
 datasource db {
@@ -13,19 +8,77 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id Int @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  email String @unique
-  password String?
-  role String
-  projects Projects[]
+generator zod {
+  provider = "zod-prisma-types"
+  output   = "../source/generated/schemas"
 }
 
-model Projects {
-  id Int @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  title String
+model User {
+  id        Int            @id @default(autoincrement())
+  createdAt DateTime       @default(now())
+  email     String         @unique
+  password  String
+  job       String?
+  projects  ProjectMember[]
+  tasks     Task[]         @relation("AssignedTasks")
+  comments  TaskComment[]
+}
+
+model Project {
+  id          Int             @id @default(autoincrement())
+  createdAt   DateTime        @default(now())
+  title       String
   description String
-  members User[]
+  status      Status          @default(IN_PROGRESS)
+  members     ProjectMember[]
+  tasks       Task[]
+}
+
+model ProjectMember {
+  id        Int          @id @default(autoincrement())
+  project   Project      @relation(fields: [projectId], references: [id])
+  projectId Int
+  user      User         @relation(fields: [userId], references: [id])
+  userId    Int
+  role      ProjectRole  @default(MEMBER)
+}
+
+model Task {
+  id          Int           @id @default(autoincrement())
+  project     Project       @relation(fields: [projectId], references: [id])
+  projectId   Int
+  title       String
+  description String?
+  priority    Priority      @default(HIGH)
+  assignedTo  User?         @relation("AssignedTasks", fields: [assignedToId], references: [id])
+  assignedToId Int?
+  deadline    DateTime?
+  comments    TaskComment[]
+}
+
+model TaskComment {
+  id        Int      @id @default(autoincrement())
+  task      Task     @relation(fields: [taskId], references: [id])
+  taskId    Int
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int
+  comment   String
+  createdAt DateTime @default(now())
+}
+
+enum ProjectRole {
+  PROJECT_MANAGER
+  MEMBER
+}
+
+enum Status {
+  STARTED
+  IN_PROGRESS
+  FINISHED
+}
+
+enum Priority {
+  LOW 
+  MEDIUM
+  HIGH
 }

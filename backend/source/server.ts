@@ -1,6 +1,4 @@
-import { PrismaClient } from '@prisma/client'
 import dotenv from 'dotenv'
-
 import app from './app'
 import prisma from './config/dbInit'
 

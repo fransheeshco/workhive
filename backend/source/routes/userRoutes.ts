@@ -1,14 +1,12 @@
 import { Request, Response, Router } from 'express'
 
+import { registerUser, loginUser } from '../controller/userController'
+
 const router: Router = Router()
 
-router.post("/register", (req: Request, res: Response) => {
-    res.status(200).json({message: "✅ User registered!"})
-})
+router.post("/register", registerUser)
 
-router.post("/login", (req: Request, res: Response) => {
-    res.status(200).json({message: "✅ User login!"})
-})
+router.post("/login", loginUser)
 
 router.post("/logout", (req: Request, res: Response) => {
     res.status(200).json({message: "✅ User logged out!"})
