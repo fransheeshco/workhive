@@ -31,6 +31,14 @@ export const loginUser = async (req: Request, res: Response) => {
         email: data.email
       }
     })
+
+    if (!user) {
+      return res.status(404).json({message: `❌ Something went wrong. User: ${data.email} does not exists`})
+    }
+
+    if (user.password !== data.password) {
+      return res.status(401).json({message: `❌ Something went wrong. Password is incorrect.`})
+    }
     return res.status(201).json({message: `✅ User logged in: ${user}`})
   } catch (err) {
     if (err instanceof ZodError) {
